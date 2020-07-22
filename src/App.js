@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Appbar from './Components/Appbar';
+import Panel from './Components/Panel';
+import BottomNav from './Components/BottomNav';
+import Table from './Components/Table';
 
 function App() {
+  const screen = React.useState(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Appbar />
+      {screen[0] === 0 ? <Panel /> : <Table />}
+
+      <BottomNav value={screen} />
     </div>
   );
 }
