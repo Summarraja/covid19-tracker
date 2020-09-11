@@ -25,8 +25,8 @@ export default function PieChart({pieData}){
 };
 
     return (
-      <div>
-        <Pie data={myData} height={100} width={200} />
+      <div className="pie">
+        <Pie data={myData} height={2} width={2} />
       </div>
     );
   }

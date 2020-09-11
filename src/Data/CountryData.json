@@ -1,4 +1,4 @@
-const CountryData = {
+{
         "sitedata": [
                 {
                         "info": {
@@ -2557,4 +2557,3 @@ const CountryData = {
                 "stat": "ok"
         }]
 }
-export default CountryData;

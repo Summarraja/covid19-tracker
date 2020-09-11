@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import Loading from '../Components/Loading';
-//import TimelineData from '../Data/TimelineData';
-
+import TimelineDataSample from '../Data/TimelineData';
+import USTimelineDataSample from '../Data/UsTimeline.json';
 
 export default function LineChart({ region }) {
   const [dates, setDates] = useState([]);
@@ -18,8 +18,15 @@ export default function LineChart({ region }) {
       let TimelineData = null;
       if (region.code === "GLO") {
         let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        response = await fetch(proxyUrl + 'https://thevirustracker.com/timeline/map-data.json');
-        TimelineData = await response.json();
+        response = await fetch(proxyUrl + 'https://thevirustracker.com/timeline/map-data.json')
+          .catch(() => {
+            console.log("Fetch error at LineChart.. displaying static data..");
+          });
+        if (!response) {
+          TimelineData = TimelineDataSample;
+        } else {
+          TimelineData = await response.json();
+        }
         TimelineData.data.map((country) => {
           var index = dataset.findIndex(o => o.milli === Date.parse(country.date));
           if (index > -1) {
@@ -42,8 +49,15 @@ export default function LineChart({ region }) {
         })
 
       } else {
-        response = await fetch('https://api.thevirustracker.com/free-api?countryTimeline=' + region.code);
-        TimelineData = await response.json();
+        response = await fetch('https://api.thevirustracker.com/free-api?countryTimeline=' + region.code)
+          .catch(() => {
+            console.log("Fetch error at LineChart.. displaying static data..");
+          });
+        if (!response) {
+          TimelineData = USTimelineDataSample;
+        } else {
+          TimelineData = await response.json();
+        }
         TimelineData = TimelineData.timelineitems[0];
         dates = Object.keys(TimelineData);
         dates.map((date) => {
@@ -91,7 +105,7 @@ export default function LineChart({ region }) {
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBorderColor: 'rgba(220,220,220,1)',
         pointBackgroundColor: '#fff',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
